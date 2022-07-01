@@ -70,7 +70,7 @@ public class TopicsController {
     @GetMapping(path = "/topics")
     public String index(Principal principal, Model model) throws IOException {
         Authentication authentication = (Authentication) principal;
-        UserInf user = (UserInf) authentication.getzPrincipal();
+        UserInf user = (UserInf) authentication.getPrincipal();
 
         Iterable<Topic> topics = repository.findAllByOrderByUpdatedAtDesc();
         List<TopicForm> list = new ArrayList<>();
