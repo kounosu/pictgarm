@@ -7,10 +7,10 @@ spring:
     multipart:
      max-file-size: 20MB
      max-request-size: 20MB
-     cloud:
-  aws:
-    stack:
-      auto: false
-    region:
+cloud:
+ aws:
+   stack:
+    auto: false
+   region:
       auto: false
       static: ap-northeast-1

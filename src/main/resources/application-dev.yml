@@ -7,7 +7,7 @@ spring:
 
   h2:
     console:
-      enabled: true
+      enabled: true 
 debug: true
 image:
   local: false
