@@ -48,6 +48,8 @@ import com.example.pictgram.form.FavoriteForm;
 import com.example.pictgram.entity.Comment;
 import com.example.pictgram.form.CommentForm;
 import com.example.pictgram.service.S3Wrapper;
+import org.thymeleaf.context.Context;
+import com.example.pictgram.service.SendMailService;
 
 @Controller
 public class TopicsController {
@@ -77,6 +79,9 @@ public class TopicsController {
     
     @Autowired
     S3Wrapper s3;
+    
+    @Autowired
+    private SendMailService sendMailService;
     
     @GetMapping(path = "/topics")
     public String index(Principal principal, Model model) throws IOException {
@@ -212,6 +217,12 @@ public class TopicsController {
         redirAttrs.addFlashAttribute("hasMessage", true);
         redirAttrs.addFlashAttribute("class", "alert-info");
         redirAttrs.addFlashAttribute("message", messageSource.getMessage("topics.create.flash.2", new String[] {}, locale));
+        
+        Context context = new Context();
+        context.setVariable("title", "【Pictgram】新規投稿");
+        context.setVariable("name", user.getUsername());
+        context.setVariable("description", entity.getDescription());
+        sendMailService.sendMail(context);
 
         return "redirect:/topics";
     }
@@ -236,7 +247,6 @@ public class TopicsController {
        throws IOException {
            String path = "uploads/topic/image/" + entity.getId() + "/" + image.getOriginalFilename();
            s3.upload(image.getInputStream(), path);
-           String fileName = image.getOriginalFilename();
            File destFile = File.createTempFile("s3_", ".tmp");
            image.transferTo(destFile);
     
