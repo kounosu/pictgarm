@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                 .oidcUserService(this.oidcUserService())
+                .userService(this.oauth2UserService())
       );
         // @formatter:on
     }
