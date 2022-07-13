@@ -27,6 +27,8 @@ spring:
             enable: true
   thymeleaf:
      check-template-location: false
+  googlemap:
+     key: ${googlemap.key}
 cloud:
  aws:
    stack:
